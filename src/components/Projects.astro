@@ -1,0 +1,213 @@
+---
+import Icon from './Icon.astro';
+import { projects, categories, person } from '../data/profile';
+
+const labelOf = Object.fromEntries(categories.map((c) => [c.id, c.label]));
+const ordered = [...projects.filter((p) => p.featured), ...projects.filter((p) => !p.featured)];
+const countOf = (id: string) => projects.filter((p) => p.category === id).length;
+---
+
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="section__title" id="projects-title">Projects</h2>
+      <p class="section__intro">
+        Pipelines, dashboards, SQL analysis and applied machine learning. Open any row for the details,
+        code and write-up.
+      </p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter projects by type">
+      <button type="button" class="chip" aria-pressed="true" data-filter="all">
+        All <span class="chip__n tnum">{projects.length}</span>
+      </button>
+      {categories.map((c) => (
+        <button type="button" class="chip" aria-pressed="false" data-filter={c.id}>
+          {c.label} <span class="chip__n tnum">{countOf(c.id)}</span>
+        </button>
+      ))}
+    </div>
+    <p class="sr-only" aria-live="polite" data-filter-status></p>
+
+    <ul class="catalog">
+      {ordered.map((p) => (
+        <li class="row" data-category={p.category}>
+          <details>
+            <summary>
+              <span class="row__main">
+                <span class="row__title">
+                  {p.title}
+                  {p.featured && <span class="row__flag">Featured</span>}
+                </span>
+                <span class="row__summary">{p.summary}</span>
+              </span>
+              <span class="row__meta">
+                <span class="row__cat">{labelOf[p.category]}</span>
+                <span class="row__stack">{p.stack.slice(0, 3).join(', ')}{p.stack.length > 3 ? ` +${p.stack.length - 3}` : ''}</span>
+              </span>
+              <span class="row__toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="row__detail">
+              <ul class="row__points">
+                {p.details.map((d) => <li>{d}</li>)}
+              </ul>
+              <ul class="row__tags" aria-label="Technologies">
+                {p.stack.map((s) => <li>{s}</li>)}
+              </ul>
+              <div class="row__links">
+                {p.repo && (
+                  <a class="btn" href={p.repo} target="_blank" rel="noopener">
+                    <Icon name="github" /> Code<span class="sr-only"> for {p.title} on GitHub</span>
+                  </a>
+                )}
+                {p.article && (
+                  <a class="btn" href={p.article} target="_blank" rel="noopener">
+                    <Icon name="medium" /> Read the write-up<span class="sr-only"> on Medium</span>
+                  </a>
+                )}
+                {p.demo && (
+                  <a class="btn btn--primary" href={p.demo} target="_blank" rel="noopener">
+                    <Icon name="external" /> Live demo
+                  </a>
+                )}
+              </div>
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+
+    <p class="catalog__more">
+      More on GitHub: <a href={person.links.github} target="_blank" rel="noopener">github.com/daniSW3</a>.
+      Much of my production work at Hatch Africa and EthioChicken sits in private company systems and is
+      summarised under Experience.
+    </p>
+  </div>
+</section>
+
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.925rem;
+    font-weight: 540;
+    cursor: pointer;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--line-strong); }
+  .chip[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .chip__n { font-size: 0.8rem; opacity: 0.7; }
+
+  .catalog { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .row { border-bottom: 1px solid var(--line); }
+  .row[hidden] { display: none; }
+
+  summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 15rem) 1.5rem;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.35rem 0.25rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover .row__title { color: var(--flow); }
+
+  .row__main { display: grid; gap: 0.35rem; }
+  .row__title { font-size: 1.15rem; font-weight: 620; line-height: 1.3; transition: color 0.15s; }
+  .row__flag {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background: var(--flow-soft);
+    color: var(--flow-ink);
+    font-size: 0.75rem;
+    font-weight: 600;
+    vertical-align: 0.15em;
+  }
+  .row__summary { color: var(--muted); max-width: 46rem; }
+  .row__meta { display: grid; gap: 0.2rem; font-size: 0.9rem; padding-top: 0.15rem; }
+  .row__cat { font-weight: 560; }
+  .row__stack { color: var(--muted); }
+
+  .row__toggle {
+    position: relative;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+  }
+  .row__toggle::before,
+  .row__toggle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.6rem;
+    height: 1.5px;
+    background: var(--ink);
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s;
+  }
+  .row__toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+  details[open] .row__toggle::after { transform: translate(-50%, -50%) rotate(0deg); }
+
+  .row__detail {
+    display: grid;
+    gap: 1.1rem;
+    padding: 0 0.25rem 1.75rem;
+    max-width: 46rem;
+    animation: open 0.22s ease-out;
+  }
+  @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .row__points { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.4rem; }
+  .row__points li::marker { color: var(--flow); }
+  .row__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+  .row__tags li {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 0.85rem;
+  }
+  .row__links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+  .catalog__more { margin-top: 1.75rem; color: var(--muted); max-width: 44rem; }
+
+  @media (max-width: 760px) {
+    summary { grid-template-columns: minmax(0, 1fr) 1.5rem; gap: 0.75rem 1rem; }
+    .row__meta { grid-column: 1; grid-row: 2; display: flex; flex-wrap: wrap; gap: 0.2rem 0.75rem; }
+    .row__toggle { grid-column: 2; grid-row: 1; }
+  }
+</style>
+
+<script>
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('.catalog .row'));
+  const status = document.querySelector('[data-filter-status]');
+
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      let shown = 0;
+      rows.forEach((r) => {
+        const match = f === 'all' || r.dataset.category === f;
+        r.hidden = !match;
+        if (match) shown++;
+      });
+      if (status) status.textContent = `Showing ${shown} project${shown === 1 ? '' : 's'}`;
+    }),
+  );
+</script>

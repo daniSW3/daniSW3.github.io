@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import Lineage from './Lineage.astro';
+import { site, person } from '../data/profile';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-name">
+  <div class="wrap hero__grid">
+    <div class="hero__text">
+      <h1 id="hero-name" class="hero__name">
+        {person.name}
+        <span class="hero__role">{person.role}, {person.focus}</span>
+      </h1>
+      <p class="hero__statement">{person.statement}</p>
+      <p class="hero__support">
+        Seven years across media, agribusiness and supply chain. SQL, Python, dbt and Power BI, from
+        the warehouse to the dashboard. Based in {person.location}.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={site.cvFile} download>
+          <Icon name="download" /> Download CV
+        </a>
+        <a class="btn" href="#projects">See projects</a>
+        <a class="btn" href={`mailto:${person.email}`}>
+          <Icon name="mail" /> Email me
+        </a>
+      </div>
+      <ul class="hero__social" aria-label="Profiles">
+        <li><a href={person.links.linkedin} rel="me noopener" target="_blank"><Icon name="linkedin" /> LinkedIn</a></li>
+        <li><a href={person.links.github} rel="me noopener" target="_blank"><Icon name="github" /> GitHub</a></li>
+        <li><a href={person.links.medium} rel="me noopener" target="_blank"><Icon name="medium" /> Medium</a></li>
+      </ul>
+    </div>
+    <div class="hero__visual">
+      <Lineage />
+      <p class="hero__caption">Where my work sits: from source systems, through the model, to the decisions it informs.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: clamp(2.5rem, 6vw, 4.75rem) clamp(3.5rem, 8vw, 6rem); }
+  .hero__grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 4.5rem);
+  }
+  .hero__text { max-width: 50rem; }
+  .hero__visual {
+    padding: clamp(1.25rem, 3vw, 2.25rem) clamp(1rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.5rem);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .hero__caption {
+    margin-top: 1.1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .hero__name {
+    display: grid;
+    gap: 0.3rem;
+    font-size: var(--s1);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .hero__role { font-size: 1rem; font-weight: 480; color: var(--muted); letter-spacing: 0; }
+  .hero__statement {
+    margin-top: 1.4rem;
+    font-size: clamp(2.1rem, 4.2vw, 3.3rem);
+    line-height: 1.06;
+    font-weight: 640;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .hero__support {
+    margin-top: 1.4rem;
+    max-width: 34rem;
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 2rem; }
+  .hero__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .hero__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding-block: 0.35rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 520;
+    text-decoration: none;
+  }
+  .hero__social a:hover { color: var(--ink); }
+  .hero__social svg { width: 1.05rem; height: 1.05rem; }
+
+
+</style>
