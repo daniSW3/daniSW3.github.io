@@ -338,7 +338,7 @@ export const education = {
   degree: 'BSc, Electrical and Computer Engineering',
   school: 'Jimma University',
   place: 'Jimma, Ethiopia',
-  years: '2012 – 2016',
+  
 };
 
 export const articles: { title: string; date: string; url: string }[] = [
