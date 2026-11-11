@@ -24,14 +24,14 @@ export const person = {
   email: 'dasufr194@gmail.com',
   links: {
     github: 'https://github.com/daniSW3',
-    linkedin: 'https://www.linkedin.com/in/daniel-temesgen-k/',
+    linkedin: 'https://www.linkedin.com/in/daniel-temesgen-ab829b155/',
     medium: 'https://medium.com/@dani.switch',
   },
 };
 
 export const about = [
   'I am a Data Engineer with seven years of experience across media, agribusiness and supply-chain businesses in Ethiopia, building the models, pipelines and reports that finance, sales and operations teams rely on.',
-  'I started as an analytics engineer at MultiChoice, building datasets and automated reporting. At EthioChicken I worked as a data engineer on ETL workflows and the Power BI models behind every major function. Now, at Hatch Africa, I design Bronze, Silver and Gold warehouse layers, dbt models, APIs and Streamlit apps for teams in six African markets.',
+  'I started as a data analyst consolidating sales data at MultiChoice Ethiopia, moved into BI as a reporting analyst building Power BI dashboards for every major function at EthioChicken, and now design dimensional models, ELT pipelines and Streamlit apps at Hatch Africa.',
   'I pair engineering discipline with clear data storytelling. Alongside my day job I build applied machine-learning projects in forecasting, fraud detection, credit risk and NLP, and I am deepening my work in the Microsoft Fabric ecosystem.',
 ];
 
@@ -46,47 +46,41 @@ export type Job = {
 
 export const experience: Job[] = [
   {
-    role: 'Data Engineer II',
+    role: 'Data Engineer',
     company: 'Hatch Africa',
     place: 'Addis Ababa',
-    start: 'Jul 2025',
+    start: 'Jul 2026',
     end: 'Present',
     points: [
-      'Design, develop and optimise scalable data pipelines and dbt-powered data models in SQL and Python, building reliable fact and dimension tables for enterprise reporting and analytics.',
-      'Architect and maintain the Azure SQL data warehouse with structured Bronze, Silver and Gold layers, improving data quality, accessibility and performance.',
-      'Develop ETL/ELT workflows integrating ERP systems, operational platforms, Google Sheets and other business applications, including spreadsheet ingestion with Azure Synapse Analytics notebooks.',
-      'Build analytics-ready datasets that power dashboards and KPIs for Sales, Finance, Supply Chain and Production teams in Ethiopia, Rwanda, Uganda, Kenya, Ghana and Côte d’Ivoire.',
-      'Consolidated sales-target KPIs from Power BI DAX into a single certified SQL KPI table, and am building an Azure API so the software engineering team can consume it directly.',
-      'Built agent segmentation and lifetime-value / acquisition-cost (LTV/CAC) analysis in Power BI, classifying agents as one-time, seasonal or high-frequency customers.',
-      'Developed three Streamlit apps (Agent NPS, L3 Recruitment, SR L3) on Azure SQL, deployed through Azure App Service and Azure DevOps; the NPS app includes an LLM-powered assistant for natural-language questions.',
-      'Implement validation and reconciliation across source systems, and optimise SQL queries, views and Power BI semantic models to cut processing time.',
+      'Build and optimise dbt-powered dimensional models (fact and dimension tables) in SQL and Python, exposing supply-chain, inventory and market-penetration KPIs that inform expansion decisions across Ethiopia and Africa.',
+      'Engineer reusable ELT pipelines with version-controlled documentation, so operations, sales and finance teams can self-serve ad-hoc analysis, cutting reporting turnaround from days to hours.',
+      'Audit and optimise Power BI semantic models and SQL views to improve refresh performance, data accuracy and maintainability.',
+      'Develop Streamlit web applications on Azure SQL for NPS and recruitment analytics, giving managers interactive access to performance metrics.',
     ],
   },
   {
-    role: 'Data Engineer I',
+    role: 'Reporting Analyst',
     company: 'EthioChicken',
-    place: 'Addis Ababa (hybrid)',
+    place: 'Addis Ababa',
     start: 'Apr 2024',
-    end: 'Jun 2025',
+    end: 'Jun 2026',
     points: [
-      'Developed and maintained SQL-based transformation processes to integrate, clean and structure data from multiple operational and business systems.',
-      'Designed and maintained ETL workflows in SQL and Python, automating data preparation and improving reporting efficiency.',
-      'Built analytical datasets, database views and Power BI reporting models behind KPI dashboards for Finance, Logistics, Procurement, Sales and Production.',
-      'Built a vaccine analytics suite tracking inventory, distribution and usage end to end across the supply chain.',
-      'Performed validation and reconciliation to ensure accuracy across reporting systems, and automated recurring reports with stakeholders.',
+      'Designed and delivered Power BI dashboards for Finance, Logistics, Procurement, Sales and Production, giving each function a single source of truth for its core KPIs.',
+      'Built a vaccine analytics suite tracking inventory, distribution and usage end to end, improving visibility across the supply chain.',
+      'Performed exploratory analysis in Python and SQL to surface insights that shaped operational and commercial decisions.',
+      'Optimised SQL queries and Python workflows, significantly reducing data processing time and report latency.',
     ],
   },
   {
-    role: 'Analytics Engineer',
-    company: 'MultiChoice Group',
+    role: 'Data Analyst',
+    company: 'MultiChoice Ethiopia',
     place: 'Addis Ababa',
     start: 'Aug 2019',
     end: 'May 2024',
     points: [
-      'Designed analytical datasets by extracting, transforming and organising data from multiple business sources using SQL and Python.',
-      'Built data models and structured reporting datasets for business intelligence and management reporting.',
-      'Developed automated reporting covering daily, weekly, monthly, quarterly and annual business performance.',
-      'Performed exploratory analysis to find sales trends and performance gaps, and turned the findings into interactive visualisations for stakeholders.',
+      'Consolidated sales data from multiple sources into structured datasets aligned with business requirements.',
+      'Produced clear visual reports and presentations on sales performance for stakeholders across the organisation.',
+      'Supported management with recurring performance tracking, turning complex data into concise, decision-ready insights.',
     ],
   },
 ];
@@ -305,49 +299,46 @@ export const projects: Project[] = [
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: 'Languages', items: ['SQL (T-SQL)', 'Python (pandas, NumPy, scikit-learn)', 'DAX', 'R'] },
+  { group: 'Languages & querying', items: ['SQL', 'Python (pandas, NumPy, scikit-learn)', 'R', 'DAX'] },
   {
     group: 'Data engineering',
     items: [
       'dbt',
-      'ETL/ELT pipelines',
-      'Medallion architecture (Bronze/Silver/Gold)',
-      'Dimensional modelling',
-      'Data validation & reconciliation',
-      'Query & view optimisation',
-      'Git',
+      'ELT pipelines',
+      'Dimensional modelling (fact & dimension tables)',
+      'Microsoft Fabric',
+      'Azure SQL',
+      'Query optimisation',
+      'Git version control',
     ],
   },
   {
-    group: 'Cloud & platforms',
-    items: ['Microsoft Fabric', 'Azure SQL Database', 'Azure Synapse Analytics', 'Azure App Service', 'Azure DevOps'],
-  },
-  {
-    group: 'BI & applications',
-    items: ['Power BI (semantic modelling, DAX)', 'Streamlit', 'Tableau', 'Matplotlib', 'Seaborn'],
+    group: 'BI & visualisation',
+    items: ['Power BI (semantic modelling, DAX)', 'Tableau', 'Streamlit', 'Matplotlib', 'Seaborn'],
   },
   {
     group: 'Analytics & ML',
-    items: ['Exploratory data analysis', 'KPI design', 'Regression', 'Classification', 'Clustering', 'Time-series forecasting', 'NLP & LLM applications'],
+    items: ['Exploratory data analysis', 'KPI design', 'Regression', 'Classification', 'Clustering', 'NLP fundamentals'],
   },
   {
     group: 'Professional',
-    items: ['Stakeholder management', 'Requirements to data solutions', 'Technical documentation', 'Data storytelling'],
+    items: ['Data storytelling', 'Stakeholder management', 'Cross-functional collaboration', 'Problem-solving'],
   },
 ];
 
-export const certifications: { name: string; issuer: string; date: string; url?: string }[] = [
-  { name: 'Microsoft Certified: Fabric Data Engineer Associate', issuer: 'Microsoft', date: 'Sep 2026' },
-  { name: 'Associate Data Engineer', issuer: 'DataCamp', date: 'Mar 2026' },
-  { name: 'Kifiya AI Mastery Training Program', issuer: '10 Academy', date: 'Jun 2025' },
-  { name: 'Advanced SQL for Data Engineering', issuer: '365 Data Science', date: 'Nov 2024' },
-  { name: 'AI Career Essentials', issuer: 'ALX Ethiopia', date: 'May 2024' },
+export const certifications: { name: string; issuer: string }[] = [
+  { name: 'Microsoft Certified: Fabric Data Engineer Associate', issuer: 'Microsoft' },
+  { name: 'Advanced SQL for Data Engineering', issuer: '365 Data Science' },
+  { name: 'Data Visualization with Tableau Specialization', issuer: 'Coursera' },
+  { name: 'The Complete SQL Bootcamp: Go from Zero to Hero', issuer: 'Udemy' },
+  { name: 'AI Career Essentials', issuer: 'ALX Ethiopia' },
 ];
 
 export const education = {
   degree: 'BSc, Electrical and Computer Engineering',
   school: 'Jimma University',
   place: 'Jimma, Ethiopia',
+  years: '2012 – 2016',
 };
 
 export const articles: { title: string; date: string; url: string }[] = [
