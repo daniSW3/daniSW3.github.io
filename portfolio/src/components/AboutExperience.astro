@@ -1,0 +1,110 @@
+---
+import { about, experience, education } from '../data/profile';
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap about">
+    <h2 class="section__title" id="about-title">About</h2>
+    <div class="about__body">
+      {about.map((p, i) => <p class={i === 0 ? 'about__lead' : undefined}>{p}</p>)}
+    </div>
+    <dl class="about__facts">
+      <div><dt>Now</dt><dd>{experience[0].role}, {experience[0].company}</dd></div>
+      <div><dt>Experience</dt><dd>7 years in analytics, BI and data engineering</dd></div>
+      <div><dt>Industries</dt><dd>Media, agribusiness, supply chain</dd></div>
+      <div><dt>Education</dt><dd>{education.degree.replace('BSc, ', 'BSc ')}, {education.school}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="experience" aria-labelledby="exp-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="section__title" id="exp-title">Experience</h2>
+    </div>
+    <ol class="timeline">
+      {experience.map((job) => (
+        <li class="job">
+          <p class="job__dates tnum">
+            <time>{job.start}</time> to <time>{job.end}</time>
+          </p>
+          <div class="job__body">
+            <h3 class="job__role">{job.role}</h3>
+            <p class="job__company">{job.company}, {job.place}</p>
+            <ul class="job__points">
+              {job.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  }
+  .about__body { display: grid; gap: 1.1rem; max-width: 40rem; }
+  .about__lead { font-size: var(--s1); line-height: 1.45; font-weight: 500; }
+  .about__body p:not(.about__lead) { color: var(--muted); }
+  .about__facts {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    gap: 0;
+    margin: 1rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .about__facts div { padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--line); }
+  .about__facts dt { color: var(--muted); font-size: 0.875rem; }
+  .about__facts dd { margin: 0.15rem 0 0; font-weight: 560; }
+
+  .timeline { margin: 0; padding: 0; list-style: none; }
+  .job {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: 0.5rem clamp(2rem, 5vw, 4rem);
+    position: relative;
+    padding-bottom: 2.75rem;
+  }
+  .job:last-child { padding-bottom: 0; }
+  .job__dates { color: var(--muted); font-size: 0.95rem; padding-top: 0.2rem; }
+  .job__body {
+    position: relative;
+    padding-left: 1.75rem;
+    border-left: 1px solid var(--line-strong);
+    max-width: 44rem;
+  }
+  .job:last-child .job__body { border-left-color: transparent; }
+  .job__body::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0.45rem;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--line-strong);
+  }
+  .job:first-child .job__body::before { border-color: var(--flow); background: var(--flow); }
+  .job__role { font-size: var(--s1); }
+  .job__company { color: var(--muted); margin-top: 0.2rem; }
+  .job__points { margin: 1rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.55rem; }
+  .job__points li::marker { color: var(--line-strong); }
+
+  @media (max-width: 760px) {
+    .about { grid-template-columns: 1fr; }
+    .about__facts { grid-column: 1; }
+    .job { grid-template-columns: 1fr; gap: 0.4rem; }
+    .job__dates { padding-left: 1.75rem; }
+    .job__body { border-left-color: var(--line-strong) !important; }
+  }
+  @media (max-width: 480px) {
+    .about__facts { grid-template-columns: 1fr; }
+  }
+</style>

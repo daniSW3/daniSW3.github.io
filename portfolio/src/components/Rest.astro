@@ -1,0 +1,193 @@
+---
+import Icon from './Icon.astro';
+import { skills, articles, certifications, education, person, site } from '../data/profile';
+
+const fmt = (d: string) =>
+  new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const year = new Date().getFullYear();
+---
+
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="section__title" id="skills-title">Skills</h2>
+    </div>
+    <div class="skills">
+      {skills.map((g) => (
+        <div class="skills__group">
+          <h3 class="skills__name">{g.group}</h3>
+          <ul class="skills__list">
+            {g.items.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="writing" aria-labelledby="writing-title">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 class="section__title" id="writing-title">Writing</h2>
+      <p class="section__intro">Project write-ups on Medium, from data pipelines to forecasting and fraud detection.</p>
+    </div>
+    <ul class="articles">
+      {articles.map((a) => (
+        <li>
+          <a href={a.url} target="_blank" rel="noopener">
+            <span class="articles__title">{a.title}</span>
+            <time class="articles__date tnum" datetime={a.date}>{fmt(a.date)}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="articles__all">
+      <a href={person.links.medium} target="_blank" rel="noopener">All articles on Medium</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="credentials" aria-labelledby="cred-title">
+  <div class="wrap creds">
+    <div>
+      <h2 class="section__title" id="cred-title">Certifications</h2>
+      <ul class="creds__list">
+        {certifications.map((c) => (
+          <li><span class="creds__name">{c.name}</span><span class="creds__issuer">{c.issuer}</span></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h2 class="section__title">Education</h2>
+      <ul class="creds__list">
+        <li>
+          <span class="creds__name">{education.degree}</span>
+          <span class="creds__issuer">{education.school}, {education.place}, <span class="tnum">{education.years}</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 class="section__title" id="contact-title">Contact</h2>
+    <p class="contact__intro">
+      Hiring for a data engineering, BI or Power BI role, or have a data problem to talk through? Email is
+      the fastest way to reach me.
+    </p>
+    <div class="contact__email">
+      <a href={`mailto:${person.email}`}>{person.email}</a>
+      <button type="button" class="btn copy" data-copy={person.email}>
+        <span class="copy__idle"><Icon name="copy" /> Copy</span>
+        <span class="copy__done"><Icon name="check" /> Copied</span>
+      </button>
+      <span class="sr-only" aria-live="polite" data-copy-status></span>
+    </div>
+    <ul class="contact__links">
+      <li><a class="btn btn--primary" href={site.cvFile} download><Icon name="download" /> Download CV (PDF)</a></li>
+      <li><a class="btn" href={person.links.linkedin} target="_blank" rel="me noopener"><Icon name="linkedin" /> LinkedIn</a></li>
+      <li><a class="btn" href={person.links.github} target="_blank" rel="me noopener"><Icon name="github" /> GitHub</a></li>
+      <li><a class="btn" href={person.links.medium} target="_blank" rel="me noopener"><Icon name="medium" /> Medium</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <p>© {year} {person.name}. {person.location}.</p>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<style>
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 2.25rem 2.5rem;
+  }
+  .skills__name { font-size: 1rem; font-weight: 620; padding-bottom: 0.65rem; border-bottom: 1px solid var(--line); }
+  .skills__list { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 0.9rem 0 0; padding: 0; list-style: none; }
+  .skills__list li {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.9rem;
+  }
+
+  .articles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .articles a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding: 1.05rem 0.25rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .articles a:hover .articles__title { color: var(--flow); text-decoration: underline; text-underline-offset: 0.2em; }
+  .articles__title { font-weight: 560; font-size: 1.05rem; }
+  .articles__date { color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+  .articles__all { margin-top: 1.5rem; }
+
+  .creds { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem clamp(2rem, 6vw, 5rem); }
+  .creds__list { margin: 1.75rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .creds__list li { display: grid; gap: 0.15rem; padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
+  .creds__name { font-weight: 580; }
+  .creds__issuer { color: var(--muted); font-size: 0.95rem; }
+
+  .contact { background: var(--surface); }
+  .contact__intro { margin-top: 1rem; max-width: 36rem; color: var(--muted); font-size: 1.125rem; }
+  .contact__email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-top: 2rem;
+  }
+  .contact__email a {
+    font-size: clamp(1.5rem, 4.4vw, 2.6rem);
+    font-weight: 640;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration-color: var(--flow);
+    text-decoration-thickness: 2px;
+    overflow-wrap: anywhere;
+  }
+  .contact__email a:hover { color: var(--flow); }
+  .copy__done { display: none; }
+  .copy[data-copied] .copy__idle { display: none; }
+  .copy[data-copied] .copy__done { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--flow); }
+  .copy__idle { display: inline-flex; align-items: center; gap: 0.55rem; }
+  .contact__links { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 2.25rem 0 0; padding: 0; list-style: none; }
+
+  .footer { border-top: 1px solid var(--line); padding: 1.75rem 0 calc(1.75rem + env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 0.9rem; }
+  .footer__inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  .footer a { color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .creds { grid-template-columns: 1fr; }
+    .articles a { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const status = document.querySelector('[data-copy-status]');
+  btn?.addEventListener('click', async () => {
+    const text = btn.dataset.copy || '';
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch {}
+      ta.remove();
+    }
+    btn.setAttribute('data-copied', '');
+    if (status) status.textContent = 'Email address copied';
+    setTimeout(() => btn.removeAttribute('data-copied'), 2000);
+  });
+</script>

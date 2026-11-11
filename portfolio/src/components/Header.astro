@@ -1,0 +1,227 @@
+---
+import Icon from './Icon.astro';
+import { site, person } from '../data/profile';
+
+const nav = [
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#writing', label: 'Writing' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="header" data-header>
+  <div class="wrap header__inner">
+    <a class="brand" href="#top" aria-label={`${person.name}, back to top`}>
+      <span class="brand__mark" aria-hidden="true">DT</span>
+      <span class="brand__name">{person.name}</span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav__list">
+        {nav.map((n) => (
+          <li><a class="nav__link" href={n.href} data-nav-link>{n.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn btn--primary nav__cv" href={site.cvFile} download>
+        <Icon name="download" /> Download CV
+      </a>
+    </nav>
+
+    <div class="header__tools">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
+        <span class="theme-icon theme-icon--moon"><Icon name="moon" /></span>
+        <span class="theme-icon theme-icon--sun"><Icon name="sun" /></span>
+      </button>
+      <button
+        class="icon-btn menu-btn"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        aria-label="Open menu"
+        data-menu-toggle
+      >
+        <span class="menu-icon menu-icon--open"><Icon name="menu" /></span>
+        <span class="menu-icon menu-icon--close"><Icon name="close" /></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .header[data-scrolled] { border-bottom-color: var(--line); }
+  .header__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 650;
+    flex: none;
+  }
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+
+  .nav { display: flex; align-items: center; gap: 1.25rem; margin-left: auto; }
+  .nav__list { display: flex; gap: 0.25rem; margin: 0; padding: 0; list-style: none; }
+  .nav__link {
+    display: block;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 520;
+    text-decoration: none;
+  }
+  .nav__link:hover { color: var(--ink); }
+  .nav__link[aria-current='true'] { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .nav__cv { min-height: 2.4rem; padding-block: 0.4rem; }
+
+  .header__tools { display: flex; gap: 0.35rem; }
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .icon-btn:hover { border-color: var(--line-strong); }
+
+  /* Theme icon shows the theme you would switch to */
+  .theme-icon--sun { display: none; }
+  :global(:root[data-theme='dark']) .theme-icon--sun { display: block; }
+  :global(:root[data-theme='dark']) .theme-icon--moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-icon--sun { display: block; }
+    :global(:root:not([data-theme='light'])) .theme-icon--moon { display: none; }
+  }
+
+  .menu-btn { display: none; }
+  .menu-icon--close { display: none; }
+  .menu-btn[aria-expanded='true'] .menu-icon--open { display: none; }
+  .menu-btn[aria-expanded='true'] .menu-icon--close { display: block; }
+
+  @media (max-width: 960px) {
+    .brand__name { display: none; }
+    .menu-btn { display: grid; }
+    .header__tools { margin-left: auto; }
+    .nav {
+      position: fixed;
+      inset: var(--header-h) 0 auto 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+      margin: 0;
+      padding: 1rem var(--gutter) 1.5rem;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 12px 24px -16px rgb(0 0 0 / 0.35);
+      transform: translateY(-0.5rem);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
+    }
+    .nav[data-open] {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .nav__list { flex-direction: column; }
+    .nav__link { padding: 0.8rem 0.5rem; font-size: 1.1rem; border-radius: var(--radius-sm); }
+    .nav__cv { justify-content: center; min-height: 2.9rem; }
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const nav = document.getElementById('site-nav');
+
+  const isDark = () =>
+    root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  const syncThemeLabel = () =>
+    themeBtn?.setAttribute('aria-label', isDark() ? 'Switch to light theme' : 'Switch to dark theme');
+  syncThemeLabel();
+
+  themeBtn?.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeLabel();
+  });
+
+  const setMenu = (open: boolean) => {
+    menuBtn?.setAttribute('aria-expanded', String(open));
+    menuBtn?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) nav?.setAttribute('data-open', '');
+    else nav?.removeAttribute('data-open');
+  };
+  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  // Border under header once the page scrolls
+  const onScroll = () => {
+    if (window.scrollY > 8) header?.setAttribute('data-scrolled', '');
+    else header?.removeAttribute('data-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Highlight the nav link for the section in view
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+  const sections = links
+    .map((l) => document.querySelector<HTMLElement>(l.getAttribute('href')!))
+    .filter((s): s is HTMLElement => !!s);
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((l) =>
+          l.setAttribute('aria-current', String(l.getAttribute('href') === `#${entry.target.id}`)),
+        );
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  sections.forEach((s) => io.observe(s));
+</script>
