@@ -53,7 +53,10 @@ const year = new Date().getFullYear();
       <h2 class="section__title" id="cred-title">Certifications</h2>
       <ul class="creds__list">
         {certifications.map((c) => (
-          <li><span class="creds__name">{c.name}</span><span class="creds__issuer">{c.issuer}</span></li>
+          <li>
+            <span class="creds__name">{c.url ? <a href={c.url} target="_blank" rel="noopener">{c.name}</a> : c.name}</span>
+            <span class="creds__issuer">{c.issuer}, <span class="tnum">{c.date}</span></span>
+          </li>
         ))}
       </ul>
     </div>
@@ -62,7 +65,7 @@ const year = new Date().getFullYear();
       <ul class="creds__list">
         <li>
           <span class="creds__name">{education.degree}</span>
-          <span class="creds__issuer">{education.school}, {education.place}, <span class="tnum">{education.years}</span></span>
+          <span class="creds__issuer">{education.school}, {education.place}</span>
         </li>
       </ul>
     </div>
